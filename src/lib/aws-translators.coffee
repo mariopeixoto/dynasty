@@ -145,6 +145,8 @@ module.exports.query = (params, options, callback, keySchema) ->
   buildFilters(awsParams.KeyConditions, params.keyConditions)
   buildFilters(awsParams.QueryFilter, params.filters)
 
+  debug "query() - #{JSON.stringify(awsParams)}"
+
   @parent.dynamo.queryAsync(awsParams)
     .then (data) ->
       dataTrans.fromDynamo(data.Items)
