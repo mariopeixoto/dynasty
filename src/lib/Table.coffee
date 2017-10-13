@@ -17,31 +17,31 @@ class Table
 
   # Wrapper around DynamoDB's batchGetItem
   batchFind: (params, callback = null) ->
-    debug "batchFind() - #{params}"
+    debug "batchFind() - #{JSON.stringify(params)}"
     @key.then awsTrans.batchGetItem.bind(this, params, callback)
 
   findAll: (params, callback = null) ->
-    debug "findAll() - #{params}"
+    debug "findAll() - #{JSON.stringify(params)}"
     @key.then awsTrans.queryByHashKey.bind(this, params, callback)
 
   # Wrapper around DynamoDB's getItem
   find: (params, options = {}, callback = null) ->
-    debug "find() - #{params}"
+    debug "find() - #{JSON.stringify(params)}"
     @key.then awsTrans.getItem.bind(this, params, options, callback)
 
   # Wrapper around DynamoDB's scan
   scan: (params, options = {}, callback = null) ->
-    debug "scan() - #{params}"
+    debug "scan() - #{JSON.stringify(params)}"
     @key.then awsTrans.scan.bind(this, params, options, callback)
 
   # Wrapper around DynamoDB's query
   query: (params, options = {}, callback = null) ->
-    debug "query() - #{params}"
+    debug "query() - #{JSON.stringify(params)}"
     @key.then awsTrans.query.bind(this, params, options, callback)
 
   # Wrapper around DynamoDB's putItem
   insert: (obj, options = {}, callback = null) ->
-    debug "insert() - " + JSON.stringify obj
+    debug "insert() - #{JSON.stringify(obj)}"
     if _.isFunction options
       callback = options
       options = {}
@@ -53,7 +53,7 @@ class Table
 
   # Wrapper around DynamoDB's updateItem
   update: (params, obj, options, callback = null) ->
-    debug "update() - " + JSON.stringify obj
+    debug "update() - #{JSON.stringify(obj)}"
     if _.isFunction options
       callback = options
       options = {}
@@ -66,7 +66,7 @@ class Table
 
   # describe
   describe: (callback = null) ->
-    debug 'describe() - ' + @name
+    debug "describe() - #{@name}"
     @parent.dynamo.describeTableAsync(TableName: @name).nodeify(callback)
 
   # drop
